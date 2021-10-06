@@ -12,7 +12,7 @@ const distanceInput = document.querySelector("#distance");
 const completeButton = document.querySelector("button.complete");
 const addButton = document.querySelector("button.add-another");
 const toast = document.querySelector("#toast");
-const newWorkout = document.querySelector(".new-workout");
+const newWorkout = document.querySelector(".new-workout")
 
 let workoutType = null;
 let shouldNavigateAway = false;
@@ -21,12 +21,13 @@ async function initExercise() {
   let workout;
 
   if (location.search.split("=")[1] === undefined) {
-    workout = await API.createWorkout();
-    console.log(workout);
+    workout = await API.createWorkout()
+    console.log(workout)
   }
   if (workout) {
     location.search = "?id=" + workout._id;
   }
+
 }
 
 initExercise();
@@ -125,7 +126,6 @@ function handleToastAnimationEnd() {
   }
 }
 
-//clears inputs
 function clearInputs() {
   cardioNameInput.value = "";
   nameInput.value = "";
@@ -141,21 +141,9 @@ if (workoutTypeSelect) {
   workoutTypeSelect.addEventListener("change", handleWorkoutTypeChange);
 }
 if (completeButton) {
-  completeButton.addEventListener("click", event => {
-    event.preventDefault()
-    let workout = {
-      type: workoutTypeSelect,
-      name: nameInput || cardioNameInput,
-      weight: weightInput,
-      sets: setsInput,
-      reps: repsInput,
-      duration: durationInput || resistanceDurationInput,
-      distance: distanceInput
-    }
-    axios.post('/api/workouts', workout)
-      .then(() => {
-        window.location = '/stats'
-      })
+  completeButton.addEventListener("click", function (event) {
+    shouldNavigateAway = true;
+    handleFormSubmit(event);
   });
 }
 if (addButton) {
@@ -165,4 +153,4 @@ toast.addEventListener("animationend", handleToastAnimationEnd);
 
 document
   .querySelectorAll("input")
-  .forEach((element) => element.addEventListener("input", validateInputs));
+  .forEach(element => element.addEventListener("input", validateInputs));

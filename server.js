@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const expres = require('express')
+const express = require('express')
 const { join } = require('path')
 
 const syncDB = require('./db')
